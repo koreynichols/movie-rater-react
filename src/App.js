@@ -13,7 +13,7 @@ function App() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token'
+        'Authorization': 'Token '
       }
     })
     .then( resp => resp.json())

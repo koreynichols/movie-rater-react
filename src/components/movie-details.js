@@ -8,6 +8,25 @@ function MovieDetails(props){
 
     const mov = props.movie;
 
+    const highlightRate = high => evt => {
+        setHighlighted(high);
+    }
+
+    const rateClicked = rate => evt => {
+        console.log(rate)
+        fetch(`http://127.0.0.1:8000/api/movies/${mov.id}/rate_movie/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token '
+            },
+            body: JSON.stringify({stars: rate + 1})
+        })
+        .then( resp => resp.json())
+        .then( resp => console.log(resp))
+        .catch( error => console.log(error))
+    }
+
     return (
         <React.Fragment>
             { mov ? (
@@ -24,8 +43,9 @@ function MovieDetails(props){
                         <h2>Rate it</h2>
                         { [...Array(5)].map( (e, i) => {
                             return <FontAwesomeIcon key={i} icon={faStar} className={highlighted > i - 1 ? 'purple': ''}
-                                onMouseEnter={setHighlighted(i)}
-                                onMouseLeave={setHighlighted(-1)}
+                                onMouseEnter={highlightRate(i)}
+                                onMouseLeave={highlightRate(-1)}
+                                onClick={rateClicked(i)}
                             />
                         })}
                     </div>
