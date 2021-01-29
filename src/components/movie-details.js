@@ -6,14 +6,13 @@ function MovieDetails(props){
 
     const [ highlighted, setHighlighted] = useState(-1);
 
-    const mov = props.movie;
+    let mov = props.movie;
 
     const highlightRate = high => evt => {
         setHighlighted(high);
     }
 
     const rateClicked = rate => evt => {
-        console.log(rate)
         fetch(`http://127.0.0.1:8000/api/movies/${mov.id}/rate_movie/`, {
             method: 'POST',
             headers: {
@@ -22,8 +21,21 @@ function MovieDetails(props){
             },
             body: JSON.stringify({stars: rate + 1})
         })
-        .then( resp => resp.json())
+        .then( () => getDetails())
         .then( resp => console.log(resp))
+        .catch( error => console.log(error))
+    }
+
+    const getDetails = () => {
+        fetch(`http://127.0.0.1:8000/api/movies/${mov.id}/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Token '
+            },
+        })
+        .then( resp => resp.json())
+        .then( resp => props.updateMovie(resp))
         .catch( error => console.log(error))
     }
 
