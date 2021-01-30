@@ -17,7 +17,7 @@ function MovieDetails(props){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Token '
+                'Authorization': process.env.REACT_APP_TOKEN
             },
             body: JSON.stringify({stars: rate + 1})
         })
@@ -31,7 +31,7 @@ function MovieDetails(props){
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Token '
+                'Authorization': process.env.REACT_APP_TOKEN
             },
         })
         .then( resp => resp.json())
