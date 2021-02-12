@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -6,15 +6,25 @@ import Auth from './components/auth';
 import reportWebVitals from './reportWebVitals';
 import { Route, BrowserRouter } from 'react-router-dom';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Route exact path="/" component={Auth} />
-      <Route exact path="/movies" component={App} />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+export const TokenContext = createContext(null);
+
+function Router(){
+
+  const TOKEN = process.env.REACT_APP_TOKEN
+
+  return (
+    <React.StrictMode>
+      <TokenContext.Provider value={TOKEN}>
+        <BrowserRouter>
+          <Route exact path="/" component={Auth} />
+          <Route exact path="/movies" component={App} />
+        </BrowserRouter>
+      </TokenContext.Provider>
+    </React.StrictMode>
+  )
+}
+
+ReactDOM.render(<Router />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
