@@ -17,8 +17,8 @@ function App() {
   const [data, loading, error] = useFetch();
 
   useEffect(()=>{
-    
-  }, [])
+    setMovies(data)
+  }, [data])
 
   useEffect( () => {
     console.log(token);
@@ -64,6 +64,8 @@ function App() {
     deleteToken(['mr-token']);
   }
 
+  if(loading) return <h1>Loading...</h1>
+  if(error) return <h1>Error loading movies</h1>
   return (
     <div className="App">
       <header className="App-header">

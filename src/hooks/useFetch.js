@@ -1,7 +1,8 @@
 import { useState, useEffect} from 'react';
 import { API } from '../api-service'
 import { useCookies } from 'react-cookie'
-function setFetch() {
+
+function useFetch() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
@@ -11,11 +12,11 @@ function setFetch() {
         async function fetchData() {
             setLoading(true);
             setError();
-            const data = await API.getMovies(token)
+            const data = await API.getMovies(token['mr-token'])
                 .catch(err => setError(err))
             setData(data)
             setLoading(false)
-        }
+        } 
         fetchData();
     }, []);
     return [data, loading, error]
